@@ -1,7 +1,5 @@
 const { sq } = require('../config/dbConnect');
 const { DataTypes } = require('sequelize');
-const crypto = require('crypto');
-
 
 const User = sq.define("users", {
     phone_number: {
@@ -27,20 +25,6 @@ User.sync().then(()=>{
 });
 
 
-function generateAPIKey (phone_number, password){
-    let data = phone_number + password;
 
-    const salt = crypto.randomBytes(16);
-
-    data += salt.toString('hex');
-
-    const hashed = crypto.createHash('sha256').update(data).digest('hex');
-
-    return hashed;
-}
-
-const api_key = generateAPIKey(phone_number, password);
-
-console.log("Generated API Key", api_key);
 
 module.exports = User;
