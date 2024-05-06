@@ -1,5 +1,5 @@
 -- create database called birthmark
-CREATE DATABASE birthmark WITH OWNER dev;
+CREATE DATABASE birthmark WITH OWNER ;
 
 -- connect to created database
 \c birthmark;
@@ -9,8 +9,8 @@ CREATE SCHEMA IF NOT EXISTS celebration AUTHORIZATION dev;
 
 -- create user table
 CREATE TABLE IF NOT EXISTS celebration.user(
-    id SERIAL,
-    phone_number PRIMARY KEY varchar(32) NOT NULL UNIQUE,
+    id SERIAL PRIMARY KEY,
+    phone_number varchar(32) NOT NULL UNIQUE,
     password varchar(32) NOT NULL,
     api_key varchar(255) NOT NULL,
     is_admin BOOLEAN DEFAULT FALSE,
@@ -26,17 +26,11 @@ CREATE TABLE IF NOT EXISTS celebration.celebrants(
     phone_number varchar(32) NOT NULL,
     email varchar(32) NOT NULL,
     birthdate DATE NOT NULL,
-    channel_id INTEGER NOT NULL,
+    channel VARCHAR(50) NOT NULL CHECK (channel IN ('SMS', 'AUTOMATED_CALL', 'EMAIL'));,
     is_active BOOLEAN DEFAULT FALSE,
+    is_deleted BOOLEAN DEFAULT FALSE,
     created_at DATE DEFAULT CURRENT_DATE,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- create channels table
-CREATE TABLE IF NOT EXISTS celebration.channels(
-    id SERIAL PRIMARY KEY,
-    name varchar(255) NOT NULL,
-    description varchar(255) NOT NULL
 );
 
 -- create a table for birthday wishes
