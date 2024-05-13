@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS celebration.birthday_wishes(
     id SERIAL PRIMARY KEY,
     celebrant_id INTEGER NOT NULL,
     message VARCHAR(3500) NOT NULL,
-    scheduled_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    scheduled_time TIMESTAMP NOT NULL
 );
 
 
