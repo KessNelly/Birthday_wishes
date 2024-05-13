@@ -1,11 +1,12 @@
 const express = require ("express");
 const { createCelebrant, getCelebrant, deleteCelebrant, updateCelebrant, getAllCelebrants, createBirthdayWish, getAllWishes} = require("../controller/celebrant.controller");
 const validateApiKey = require("../middleware/authorizeApi");
+const createCelebrantValidation = require("../utils/validator");
 const router = express.Router();
 
 
 
-router.post('/celebrant', validateApiKey,createCelebrant);
+router.post('/celebrant',validateApiKey,createCelebrantValidation,createCelebrant);
 router.post('/wishes', validateApiKey,createBirthdayWish);
 router.patch('/celebrant/:id', validateApiKey,updateCelebrant);
 router.get('/celebrant/:id',validateApiKey,getCelebrant);

@@ -1,8 +1,20 @@
 const {pool} = require('../config/dbConnect');
+const { validationResult } = require('express-validator');
+const createCelebrantValidation = require('../utils/validator');
 
 
 //create a new celebrant
 const createCelebrant = async(req, res) => {
+
+     // Check for validation errors
+
+     const errors = validationResult(req);
+
+
+     if (!errors.isEmpty()) {
+         return res.status(400).json({ success: false, errors: errors.array() });
+     }
+
     const {username,gender,phone_number,email,birthdate,channel,is_active} = req.body
 
     try {
@@ -142,7 +154,6 @@ const updateCelebrant = async (req, res) => {
         });
     }
 };
-
 
 
  // delete a celebrant
