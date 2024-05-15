@@ -192,7 +192,7 @@ const createBirthdayWish = async(req, res) => {
 
         const { rows } = await pool.query(wishExistsQuery);
 
-        if (rows.length === 0) {
+        if (rows.length === 1) {
             //if celebrants exists, continue with creating new wish
         const result = {
             text: "INSERT INTO celebration.birthday_wishes (celebrant_id,message,scheduled_time) VALUES ($1, $2, $3) RETURNING *",
@@ -206,11 +206,17 @@ const createBirthdayWish = async(req, res) => {
             msg: "Birthday wish created successfully",
             data: newWish[0]
         });
-    } else {
+    } else if (rows.length === 0) {
         // If celebrant doesn't exist, return an error
         return res.status(404).json({
             success: false,
             msg: "Celebrant not found",
+        });
+    }  else {
+        // If multiple celebrants found (unexpected scenario), return an error
+        return res.status(500).json({
+            success: false,
+            msg: "Multiple celebrants found with the same ID"
         });
     }
     
