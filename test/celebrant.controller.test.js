@@ -467,5 +467,5 @@ describe('Controller Tests', () => {
     
 });
 
-    // Repeat the same structure for other controller functions
+    
 
